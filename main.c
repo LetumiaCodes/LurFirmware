@@ -29,10 +29,8 @@ int main() {
    printf("===========================\n");
    printf("| Current version [v0.05] |\n");
    printf("===========================\n");
-   goto MainLoop;
 
    while (true) {
-       MainLoop:
        
        int MaxInput_len = 100;
 
@@ -74,22 +72,19 @@ int main() {
            sleep(2);
            ClearScreen();
            return 0;
-       }
-
-       if (strcmp(command, Logs) == 0) {
+       } else if (strcmp(command, Logs) == 0) {
            ClearScreen();
            printf("Not yet implimented\n");
-           goto MainLoop;
-       }
-
-       if (strcmp(command, wavRandom) == 0) {
+           sleep(3);
+       } else if (strcmp(command, wavRandom) == 0) {
           DIR *AudioDir = opendir(AudioPath);
 
           if (AudioDir == NULL) {
               perror("Failed to open source to audio files... :(\n");
               return 1;;
           }
-         
+
+          chdir(AudioPath);
           system(AudioFiles[index]);
 
           if (!AudioFiles) {
