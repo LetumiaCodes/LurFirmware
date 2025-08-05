@@ -5,17 +5,29 @@
 #include <dirent.h>
 #include <time.h>
 
-#define AMOUNT 1
+#define AMOUNT 4
+#define wavBOOT 1
 
 void ClearScreen() {
     system("clear");
 }
 
-void devLogs() {
-    //Add devLog logic here later
+void BOOT() {
+   const char *BootPath = "/root/LurFirmware/AudioFiles";
+   const char wavBoot[wavBOOT][35] = {"aplay BOOT.wav >/dev/null 2>&1"};
+
+   int numBoot = sizeof(wavBoot) / sizeof(wavBoot[0]);
+   srand(time(NULL));
+
+   int wavOnBoot = rand() % numBoot;
+
+   DIR *BootAudio = opendir(BootPath);
+
+   chdir(BootPath);
+   system(wavBoot[wavOnBoot]);
 }
 
-int main() {
+int main(void) {
    ClearScreen();
    printf("##     ##     ##  #####    ######  ##  #####    ###     ###  ##       ##  ######  #####     #####\n"); 
    printf("##     ##     ##  ##  ##   ##      ##  ##  ##   ## #   # ##  ##       ##  ##  ##  ##  ##    ##   \n");
@@ -29,9 +41,10 @@ int main() {
    printf("===========================\n");
    printf("| Current version [v0.05] |\n");
    printf("===========================\n");
-
+   BOOT();
+ 
    while (true) {
-       
+        
        int MaxInput_len = 100;
 
        if (!MaxInput_len) {
@@ -49,12 +62,21 @@ int main() {
        const char Logs[] = "devLogs";
        const char wavRandom[] = "wavRandom"; 
        const char AudioFiles[AMOUNT][50] = {
-           "mpv Friend.wav --no-video"
+           "aplay Friend.wav",
+           "aplay Bored.wav", 
+           "aplay Play.wav",
+           "aplay WhatAmI.wav"
+       };
+       const char FunAudio[AMOUNT][50] = {
+           "aplay Pee.wav",
+           "aplay Poo.wav",
+           "aplay SelfWare_PeeJoke.wav", 
+           "aplay SelfAware_Poo.wav"
        };
 
        const char *AudioPath = "/root/LurFirmware/AudioFiles";
 
-       int numCommands = sizeof(AudioFiles) / sizeof(command[0]);
+       int numCommands = sizeof(AudioFiles) / sizeof(AudioFiles[0]);
        srand(time(NULL));
 
        int index = rand() % numCommands;
